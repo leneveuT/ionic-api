@@ -1,7 +1,6 @@
 <?php
+
 // required headers
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -15,23 +14,20 @@ $db = $database->getConnection();
 
 $cheval = new Cheval($db);
 
-// recuperation des donnees json "postees"
-$data = json_decode(file_get_contents("php://input"));
-
 // verifie que les donnees existent
 if(
-    !empty($data->id) &&
-	!empty($data->nom) &&
-	!empty($data->sexe) &&
-    !empty($data->prixDepart)
+    !empty($_POST['id']) &&
+	!empty($_POST['nom']) &&
+	!empty($_POST['sexe']) &&
+    !empty($_POST['prixDepart'])
 
 ){
 
     // valorisation de l'objet cheval avec les donnes postees
-    $cheval->id = $data->id;
-    $cheval->nom = $data->nom;
-    $cheval->sexe = $data->sexe;
-    $cheval->prixDepart = $data->prixDepart;
+    $cheval->id = $_POST['id'];
+    $cheval->nom = $_POST['nom'];
+    $cheval->sexe = $_POST['sexe'];
+    $cheval->prixDepart = $_POST['prixDepart'];
 
     // insertion du cheval en bdd
     if($cheval->create()){
