@@ -1,23 +1,25 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
 --
--- Client :  127.0.0.1
--- Généré le :  Lun 12 Mars 2018 à 08:50
--- Version du serveur :  5.6.17-log
--- Version de PHP :  5.5.12
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  ven. 26 avr. 2019 à 13:09
+-- Version du serveur :  5.7.21
+-- Version de PHP :  7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `equida`
+-- Base de données :  `ionequi`
 --
 
 -- --------------------------------------------------------
@@ -26,43 +28,48 @@ SET time_zone = "+00:00";
 -- Structure de la table `cheval`
 --
 
+DROP TABLE IF EXISTS `cheval`;
 CREATE TABLE IF NOT EXISTS `cheval` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(40) NOT NULL,
   `sexe` varchar(1) DEFAULT NULL,
   `prixDepart` int(11) NOT NULL,
   `typecheval` int(11) DEFAULT NULL,
+  `clientID` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_CHEVAL_TYPE` (`typecheval`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `FK_CHEVAL_TYPE` (`typecheval`),
+  KEY `clientID` (`clientID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5151501 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `cheval`
+-- Déchargement des données de la table `cheval`
 --
 
-INSERT INTO `cheval` (`id`, `nom`, `sexe`, `prixDepart`, `typecheval`) VALUES
-(1, 'Valdack', 'M', 10000, 2),
-(2, 'Trais d''or', 'M', 7000, 1),
-(3, 'Herricka', 'F', 56000, 2),
-(4, 'Nuage', 'M', 6500, 1),
-(5, 'Flying fox', 'F', 8000, 3),
-(6, 'rainbow quest', 'F', 58000, 3),
-(7, 'Generous', 'M', 8900, 4),
-(8, 'Gladiateur', 'M', 15000, 3),
-(9, 'California Chrome', 'F', 12700, 2),
-(10, 'Kindjar', 'F', 9500, 3),
-(11, 'Dancing Brave', 'F', 9400, 1),
-(12, 'Linamix', 'M', 72000, 3),
-(13, 'Solow', 'M', 27000, 4),
-(14, 'Kingmambo', 'M', 29450, 1),
-(15, 'Curlin', 'F', 52300, 4),
-(16, 'Dalakni', 'M', 4300, 2),
-(17, 'Dane Dream', 'F', 41000, 4),
-(18, 'Arazi', 'M', 84000, 3),
-(19, 'Black Caviar', 'M', 12450, 3),
-(20, 'Storm Cat', 'F', 24100, 4),
-(25, 'aaaaa', NULL, 0, NULL),
-(27, 'cheval 27', 'M', 0, NULL);
+INSERT INTO `cheval` (`id`, `nom`, `sexe`, `prixDepart`, `typecheval`, `clientID`) VALUES
+(1, 'Valdack', 'M', 10000, 2, 1),
+(2, 'Trais d\'or', 'M', 7000, 1, NULL),
+(3, 'Herricka', 'F', 56000, 2, NULL),
+(4, 'Nuage', 'M', 6500, 1, NULL),
+(5, 'Flying fox', 'F', 8000, 3, NULL),
+(6, 'rainbow quest', 'F', 58000, 3, NULL),
+(7, 'Generous', 'M', 8900, 4, NULL),
+(8, 'Gladiateur', 'M', 15000, 3, NULL),
+(9, 'California Chrome', 'F', 12700, 2, NULL),
+(10, 'Kindjar', 'F', 9500, 3, NULL),
+(11, 'Dancing Brave', 'F', 9400, 1, NULL),
+(12, 'Linamix', 'M', 72000, 3, NULL),
+(13, 'Solow', 'M', 27000, 4, NULL),
+(14, 'Kingmambo', 'M', 29450, 1, NULL),
+(15, 'Curlin', 'F', 52300, 4, NULL),
+(16, 'Dalakni', 'M', 4300, 2, NULL),
+(17, 'Dane Dream', 'F', 41000, 4, NULL),
+(18, 'Arazi', 'M', 84000, 3, NULL),
+(19, 'Black Caviar', 'M', 12450, 3, NULL),
+(20, 'Storm Cat', 'F', 24100, 4, NULL),
+(25, 'aaaaa', NULL, 0, NULL, NULL),
+(27, 'cheval 27', 'M', 0, NULL, NULL),
+(48, 'cheval 48', 'M', 22000, NULL, NULL),
+(5151500, 'nom', 'M', 15, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -70,15 +77,16 @@ INSERT INTO `cheval` (`id`, `nom`, `sexe`, `prixDepart`, `typecheval`) VALUES
 -- Structure de la table `client`
 --
 
+DROP TABLE IF EXISTS `client`;
 CREATE TABLE IF NOT EXISTS `client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   `mail` varchar(70) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `client`
+-- Déchargement des données de la table `client`
 --
 
 INSERT INTO `client` (`id`, `nom`, `mail`) VALUES
@@ -96,16 +104,17 @@ INSERT INTO `client` (`id`, `nom`, `mail`) VALUES
 -- Structure de la table `course`
 --
 
+DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   `lieu` varchar(50) NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `course`
+-- Déchargement des données de la table `course`
 --
 
 INSERT INTO `course` (`id`, `nom`, `lieu`, `date`) VALUES
@@ -114,7 +123,7 @@ INSERT INTO `course` (`id`, `nom`, `lieu`, `date`) VALUES
 (3, 'Prix Dahman', 'Dax', '2016-09-07'),
 (4, 'prix Danbik', 'Aurillac', '2016-08-08'),
 (5, 'prix Pierre Pechdo', 'Pompadour', '2016-09-18'),
-(6, 'prix d''Ornano', 'Deauville', '2016-10-02');
+(6, 'prix d\'Ornano', 'Deauville', '2016-10-02');
 
 -- --------------------------------------------------------
 
@@ -122,6 +131,7 @@ INSERT INTO `course` (`id`, `nom`, `lieu`, `date`) VALUES
 -- Structure de la table `resultatcourse`
 --
 
+DROP TABLE IF EXISTS `resultatcourse`;
 CREATE TABLE IF NOT EXISTS `resultatcourse` (
   `course` int(11) NOT NULL,
   `cheval` int(11) NOT NULL,
@@ -131,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `resultatcourse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `resultatcourse`
+-- Déchargement des données de la table `resultatcourse`
 --
 
 INSERT INTO `resultatcourse` (`course`, `cheval`, `place`) VALUES
@@ -154,6 +164,7 @@ INSERT INTO `resultatcourse` (`course`, `cheval`, `place`) VALUES
 -- Structure de la table `typecheval`
 --
 
+DROP TABLE IF EXISTS `typecheval`;
 CREATE TABLE IF NOT EXISTS `typecheval` (
   `id` int(11) NOT NULL,
   `libelle` varchar(50) NOT NULL,
@@ -161,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `typecheval` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `typecheval`
+-- Déchargement des données de la table `typecheval`
 --
 
 INSERT INTO `typecheval` (`id`, `libelle`) VALUES
@@ -171,15 +182,16 @@ INSERT INTO `typecheval` (`id`, `libelle`) VALUES
 (4, 'trotteur');
 
 --
--- Contraintes pour les tables exportées
+-- Contraintes pour les tables déchargées
 --
 
 --
 -- Contraintes pour la table `cheval`
 --
 ALTER TABLE `cheval`
+  ADD CONSTRAINT `FK_CHEVAL_TYPE` FOREIGN KEY (`typecheval`) REFERENCES `typecheval` (`id`),
   ADD CONSTRAINT `cheval_ibfk_1` FOREIGN KEY (`typecheval`) REFERENCES `typecheval` (`id`),
-  ADD CONSTRAINT `FK_CHEVAL_TYPE` FOREIGN KEY (`typecheval`) REFERENCES `typecheval` (`id`);
+  ADD CONSTRAINT `cheval_ibfk_2` FOREIGN KEY (`clientID`) REFERENCES `client` (`id`);
 
 --
 -- Contraintes pour la table `resultatcourse`
@@ -187,6 +199,7 @@ ALTER TABLE `cheval`
 ALTER TABLE `resultatcourse`
   ADD CONSTRAINT `FK_cheval` FOREIGN KEY (`cheval`) REFERENCES `cheval` (`id`),
   ADD CONSTRAINT `FK_course` FOREIGN KEY (`course`) REFERENCES `course` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
