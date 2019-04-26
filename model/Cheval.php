@@ -26,6 +26,17 @@ class Cheval{
 		return $stmt;
 	}
 
+  function getChevauxByClient($id) {
+    $query = "SELECT * FROM " . $this->table_name ." WHERE clientID = ?";
+		$stmt = $this->conn->prepare($query);
+
+    // affecte la valeur de l id au paramètre de la requete
+		$stmt->bindParam(1, $id);
+
+		$stmt->execute();
+		return $stmt;
+  }
+
   // consulter un cheval en fonction de son id
 	function getChevalById(){
 
